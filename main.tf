@@ -37,7 +37,7 @@ resource "proxmox_lxc" "vaultwarden" {
 
 	rootfs {
 		storage = "local-lvm"
-		size = "8G"
+		size = "4G"
 	}
 
 	network {
@@ -64,7 +64,7 @@ resource "proxmox_lxc" "nostr" {
 
 	rootfs {
 		storage = "local-lvm"
-		size = "16G"
+		size = "8G"
 	}
 
 	network {
@@ -75,9 +75,9 @@ resource "proxmox_lxc" "nostr" {
 	}
 }
 
-resource "proxmox_lxc" "monitoring" {
+resource "proxmox_lxc" "metrics" {
 	target_node = "uneunet-main"
-	hostname = "monitoring"
+	hostname = "metrics"
 	ostemplate = "local:vztmpl/ubuntu-24.04-standard_24.04-2_amd64.tar.zst"
 	password = "password"
 	unprivileged = true
