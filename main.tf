@@ -102,3 +102,26 @@ resource "proxmox_lxc" "metrics" {
 	}
 }
 
+resource "proxmox_lxc" "tailscale" {
+	target_node = "uneunet-main"
+	hostname = "tailscale"
+	ostemplate = "local:vztmpl/ubuntu-24.04-standard_24.04-2_amd64.tar.zst"
+	password = "password"
+	unprivileged = true
+
+	cores = 1
+	memory = 256
+
+	rootfs {
+		storage = "local-lvm"
+		size = "4G"
+	}
+
+	network {
+		name = "eno1"
+		bridge = "vmbr0"
+		ip = "192.168.1.35/24"
+		gw = "192.168.1.254"
+	}
+}
+
