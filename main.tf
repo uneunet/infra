@@ -125,3 +125,26 @@ resource "proxmox_lxc" "tailscale" {
 	}
 }
 
+resource "proxmox_lxc" "gyokai" {
+	target_node = "uneunet-main"
+	hostname = "gyokai"
+	ostemplate = "local:vztmpl/ubuntu-24.04-standard_24.04-2_amd64.tar.zst"
+	password = "password"
+	unprivileged = true
+
+	cores = 2
+	memory = 4096
+
+	rootfs {
+		storage = "local-lvm"
+		size = "16G"
+	}
+
+	network {
+		name = "eno1"
+		bridge = "vmbr0"
+		ip = "192.168.1.36/24"
+		gw = "192.168.1.254"
+	}
+}
+
