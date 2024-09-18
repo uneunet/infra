@@ -128,7 +128,11 @@ resource "proxmox_lxc" "wekan" {
 	password = "password"
 	unprivileged = true
 
-	cores = 2
+	features {
+		nesting = true
+	}
+
+	cores = 1
 	memory = 512
 
 	rootfs {
