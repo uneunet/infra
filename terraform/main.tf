@@ -1,16 +1,18 @@
-resource "proxmox_lxc" "cf-tunnel" {
+resource "proxmox_lxc" "k3s-server" {
 	target_node = "uneunet-main"
-	hostname = "cf-tunnel"
+	hostname = "k3s-server"
 	ostemplate = "local:vztmpl/ubuntu-24.04-standard_24.04-2_amd64.tar.zst"
 	password = "password"
-	unprivileged = true
+	unprivileged = false
+	vmid = 100
 
-	cores = 1
-	memory = 512
+	cores = 4
+	memory = 4096
+	swap = 0
 
 	rootfs {
 		storage = "local-lvm"
-		size = "4G"
+		size = "20G"
 	}
 
 	network {
@@ -21,23 +23,21 @@ resource "proxmox_lxc" "cf-tunnel" {
 	}
 }
 
-resource "proxmox_lxc" "nostr" {
+resource "proxmox_lxc" "k3s-agent-apollo" {
 	target_node = "uneunet-main"
-	hostname = "nostr"
+	hostname = "k3s-agent-apollo"
 	ostemplate = "local:vztmpl/ubuntu-24.04-standard_24.04-2_amd64.tar.zst"
 	password = "password"
-	unprivileged = true
+	unprivileged = false
+	vmid = 101
 
-	features {
-		nesting = true
-	}
-
-	cores = 1
-	memory = 1024
+	cores = 4
+	memory = 4096
+	swap = 0
 
 	rootfs {
 		storage = "local-lvm"
-		size = "8G"
+		size = "20G"
 	}
 
 	network {
@@ -48,23 +48,21 @@ resource "proxmox_lxc" "nostr" {
 	}
 }
 
-resource "proxmox_lxc" "metrics" {
+resource "proxmox_lxc" "k3s-agent-raputa" {
 	target_node = "uneunet-main"
-	hostname = "metrics"
+	hostname = "k3s-agent-raputa"
 	ostemplate = "local:vztmpl/ubuntu-24.04-standard_24.04-2_amd64.tar.zst"
 	password = "password"
-	unprivileged = true
+	unprivileged = false
+	vmid = 102
 
-	features {
-		nesting = true
-	}
-
-	cores = 1
-	memory = 512
+	cores = 4
+	memory = 4096
+	swap = 0
 
 	rootfs {
 		storage = "local-lvm"
-		size = "4G"
+		size = "20G"
 	}
 
 	network {
@@ -75,62 +73,13 @@ resource "proxmox_lxc" "metrics" {
 	}
 }
 
-resource "proxmox_lxc" "tailscale" {
+resource "proxmox_lxc" "cf-tunnel" {
 	target_node = "uneunet-main"
-	hostname = "tailscale"
+	hostname = "cf-tunnel"
 	ostemplate = "local:vztmpl/ubuntu-24.04-standard_24.04-2_amd64.tar.zst"
 	password = "password"
 	unprivileged = true
-
-	cores = 1
-	memory = 256
-
-	rootfs {
-		storage = "local-lvm"
-		size = "4G"
-	}
-
-	network {
-		name = "eno1"
-		bridge = "vmbr0"
-		ip = "192.168.1.34/24"
-		gw = "192.168.1.254"
-	}
-}
-
-resource "proxmox_lxc" "gyokai" {
-	target_node = "uneunet-main"
-	hostname = "gyokai"
-	ostemplate = "local:vztmpl/ubuntu-24.04-standard_24.04-2_amd64.tar.zst"
-	password = "password"
-	unprivileged = true
-
-	cores = 2
-	memory = 4096
-
-	rootfs {
-		storage = "local-lvm"
-		size = "16G"
-	}
-
-	network {
-		name = "eno1"
-		bridge = "vmbr0"
-		ip = "192.168.1.35/24"
-		gw = "192.168.1.254"
-	}
-}
-
-resource "proxmox_lxc" "wekan" {
-	target_node = "uneunet-main"
-	hostname = "wekan"
-	ostemplate = "local:vztmpl/ubuntu-24.04-standard_24.04-2_amd64.tar.zst"
-	password = "password"
-	unprivileged = true
-
-	features {
-		nesting = true
-	}
+	vmid = 200
 
 	cores = 1
 	memory = 512
@@ -148,3 +97,26 @@ resource "proxmox_lxc" "wekan" {
 	}
 }
 
+resource "proxmox_lxc" "tailscale" {
+	target_node = "uneunet-main"
+	hostname = "tailscale"
+	ostemplate = "local:vztmpl/ubuntu-24.04-standard_24.04-2_amd64.tar.zst"
+	password = "password"
+	unprivileged = true
+	vmid = 201
+
+	cores = 1
+	memory = 256
+
+	rootfs {
+		storage = "local-lvm"
+		size = "4G"
+	}
+
+	network {
+		name = "eno1"
+		bridge = "vmbr0"
+		ip = "192.168.1.37/24"
+		gw = "192.168.1.254"
+	}
+}
