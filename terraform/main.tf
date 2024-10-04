@@ -1,6 +1,6 @@
-resource "proxmox_lxc" "k3s-server" {
+resource "proxmox_lxc" "nomad-server" {
 	target_node = "uneunet-main"
-	hostname = "k3s-server"
+	hostname = "nomad-server"
 	ostemplate = "local:vztmpl/ubuntu-24.04-standard_24.04-2_amd64.tar.zst"
 	password = "password"
 	unprivileged = false
@@ -23,9 +23,9 @@ resource "proxmox_lxc" "k3s-server" {
 	}
 }
 
-resource "proxmox_lxc" "k3s-agent-apollo" {
+resource "proxmox_lxc" "nomad-client-apollo" {
 	target_node = "uneunet-main"
-	hostname = "k3s-agent-apollo"
+	hostname = "nomad-client-apollo"
 	ostemplate = "local:vztmpl/ubuntu-24.04-standard_24.04-2_amd64.tar.zst"
 	password = "password"
 	unprivileged = false
@@ -33,7 +33,6 @@ resource "proxmox_lxc" "k3s-agent-apollo" {
 
 	cores = 4
 	memory = 4096
-	swap = 0
 
 	rootfs {
 		storage = "local-lvm"
@@ -48,9 +47,9 @@ resource "proxmox_lxc" "k3s-agent-apollo" {
 	}
 }
 
-resource "proxmox_lxc" "k3s-agent-raputa" {
+resource "proxmox_lxc" "nomad-client-raputa" {
 	target_node = "uneunet-main"
-	hostname = "k3s-agent-raputa"
+	hostname = "nomad-client-raputa"
 	ostemplate = "local:vztmpl/ubuntu-24.04-standard_24.04-2_amd64.tar.zst"
 	password = "password"
 	unprivileged = false
@@ -58,7 +57,6 @@ resource "proxmox_lxc" "k3s-agent-raputa" {
 
 	cores = 4
 	memory = 4096
-	swap = 0
 
 	rootfs {
 		storage = "local-lvm"
